@@ -1,0 +1,25 @@
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if (preorder.length == 0 || inorder.length == 0) {
+            return null;
+        }
+
+        TreeNode root = new TreeNode(preorder[0]);
+
+        int mid = 0;
+        while (inorder[mid] != preorder[0]) {
+            mid++;
+        }
+
+        int[] leftPreorder = java.util.Arrays.copyOfRange(preorder, 1, mid + 1);
+        int[] leftInorder = java.util.Arrays.copyOfRange(inorder, 0, mid);
+
+        int[] rightPreorder = java.util.Arrays.copyOfRange(preorder, mid + 1, preorder.length);
+        int[] rightInorder = java.util.Arrays.copyOfRange(inorder, mid + 1, inorder.length);
+
+        root.left = buildTree(leftPreorder, leftInorder);
+        root.right = buildTree(rightPreorder, rightInorder);
+
+        return root;
+    }
+}
